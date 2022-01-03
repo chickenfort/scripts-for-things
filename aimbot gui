@@ -96,7 +96,7 @@ local function LWYLW_fake_script() -- toggle.LocalScript
 				for i,v in pairs(game:GetService("Players"):GetPlayers()) do
 					if v ~= localplayer then
 						if v.Character and v.Character:FindFirstChild("Head") and v.TeamColor ~= localplayer.TeamColor and _G.aimbot == true then
-							local mag = (v.Character.Head.Position - mouse.Hit.Position).magnitude
+							local mag = (v.Character.Head.Position - localplayer.Character.Head.Position).magnitude
 							if mag < dist then
 								dist = mag
 								target = v
