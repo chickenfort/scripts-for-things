@@ -1,0 +1,158 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local title = Instance.new("TextLabel")
+local toggle = Instance.new("TextButton")
+local close = Instance.new("TextButton")
+local open = Instance.new("TextButton")
+local UICorner = Instance.new("UICorner")
+
+--Properties:
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(32, 32, 43)
+Frame.Position = UDim2.new(0.0656565651, 0, 0.414364636, 0)
+Frame.Size = UDim2.new(0, 133, 0, 146)
+
+title.Name = "title"
+title.Parent = Frame
+title.BackgroundColor3 = Color3.fromRGB(255, 0, 4)
+title.BackgroundTransparency = 0.500
+title.Position = UDim2.new(0, 0, -0.10958904, 0)
+title.Size = UDim2.new(0, 133, 0, 28)
+title.Font = Enum.Font.SourceSans
+title.Text = "aimbot"
+title.TextColor3 = Color3.fromRGB(221, 197, 255)
+title.TextScaled = true
+title.TextSize = 14.000
+title.TextWrapped = true
+
+toggle.Name = "toggle"
+toggle.Parent = Frame
+toggle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+toggle.BackgroundTransparency = 1.000
+toggle.Position = UDim2.new(0, 0, 0.0821917802, 0)
+toggle.Size = UDim2.new(0, 133, 0, 134)
+toggle.Font = Enum.Font.SourceSans
+toggle.Text = "off"
+toggle.TextColor3 = Color3.fromRGB(255, 0, 4)
+toggle.TextScaled = true
+toggle.TextSize = 14.000
+toggle.TextWrapped = true
+
+close.Name = "close"
+close.Parent = Frame
+close.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+close.BackgroundTransparency = 1.000
+close.Position = UDim2.new(0.751879692, 0, -0.10958904, 0)
+close.Size = UDim2.new(0, 33, 0, 28)
+close.Font = Enum.Font.SourceSans
+close.Text = "X"
+close.TextColor3 = Color3.fromRGB(93, 128, 255)
+close.TextScaled = true
+close.TextSize = 14.000
+close.TextWrapped = true
+
+open.Name = "open"
+open.Parent = ScreenGui
+open.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+open.BackgroundTransparency = 0.500
+open.Position = UDim2.new(0, 0, 0.729281783, 0)
+open.Size = UDim2.new(0, 73, 0, 31)
+open.Visible = false
+open.Font = Enum.Font.SourceSans
+open.Text = "open"
+open.TextColor3 = Color3.fromRGB(0, 0, 0)
+open.TextScaled = true
+open.TextSize = 14.000
+open.TextWrapped = true
+
+UICorner.Parent = open
+
+-- Scripts:
+
+local function WZZW_fake_script() -- toggle.LocalScript 
+	local script = Instance.new('LocalScript', toggle)
+
+	_G.aimbottoggle = false
+	local camera = game.Workspace.CurrentCamera
+	local localplayer = game:GetService("Players").LocalPlayer
+	local dist = math.huge
+	local target = nil
+	
+	script.Parent.MouseButton1Click:Connect(function()
+		if _G.aimbottoggle == false then
+			_G.aimbottoggle = true
+			script.Parent.Text = "on"
+			script.Parent.TextColor3 = Color3.fromRGB(0,255,0)
+			function closestplayer()
+				for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+					if v ~= localplayer then
+						if v.Character and v.Character:FindFirstChild("Head") and v.TeamColor ~= localplayer.TeamColor and _G.aimbottoggle then
+							local mag = (v.Character.Head.Position - localplayer.Character.Head.Position).magnitude
+							if mag < dist then
+								target = v
+							end
+						end
+					end
+				end
+				return target
+			end
+		elseif _G.aimbottoggle == true then
+			_G.aimbottoggle = false
+			script.Parent.Text = "off"
+			script.Parent.TextColor3 = Color3.fromRGB(255,0,0)
+		end
+	end)
+	
+	local settings = {
+		keybind = Enum.UserInputType.MouseButton2
+	}
+	
+	local uis = game:GetService("UserInputService")
+	local aiming = false
+	
+	uis.InputBegan:Connect(function(inp,chat)
+		if chat then return end
+		if inp.UserInputType == settings.keybind then
+			aiming = true
+		end
+	end)
+	uis.InputEnded:Connect(function(inp,chat)
+		if chat then return end
+		if inp.UserInputType == settings.keybind then
+			aiming = false
+		end
+	end)
+	
+	game:GetService("RunService").RenderStepped:Connect(function()
+		if aiming then
+			camera.CFrame = CFrame.new(camera.CFrame.Position,closestplayer().Character.Head.CFrame.Position)
+		end	
+	end)
+end
+coroutine.wrap(WZZW_fake_script)()
+local function GKGTTM_fake_script() -- close.LocalScript 
+	local script = Instance.new('LocalScript', close)
+
+	script.Parent.MouseButton1Click:Connect(function()
+		script.Parent.Parent.Visible = false
+		script.Parent.Parent.Parent.open.Visible = true
+	end)
+end
+coroutine.wrap(GKGTTM_fake_script)()
+local function BSAJ_fake_script() -- open.LocalScript 
+	local script = Instance.new('LocalScript', open)
+
+	script.Parent.MouseButton1Click:Connect(function()
+		script.Parent.Parent.Frame.Visible = true
+		script.Parent.Visible = false
+	end)
+end
+coroutine.wrap(BSAJ_fake_script)()
