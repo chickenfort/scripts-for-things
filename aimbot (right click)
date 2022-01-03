@@ -1,0 +1,35 @@
+local uis = game:GetService("UserInputService")
+local plr = game:GetService("Players").LocalPlayer
+
+function getclosest()
+    local closestdist = math.huge
+    local closestplr = nil
+    for i,v in pairs(game:GetService("Players"):GetPlayers()) do
+        if v ~= plr and v.Team ~= plr.Team then
+            local dist = (v.Character.HumanoidRootPart.CFrame.Position - plr.Character.HumanoidRootPart.CFrame.Position).magnitude
+            if dist < closestdist then
+                closestdist = dist
+                closestplr = v
+            end
+        end
+    end
+    return closestplr
+end
+
+uis.InputBegan:Connect(function(input,chat)
+    if chat then return end
+    if input.UserInputType == Enum.UserInputType.MouseButton2 then
+        _G.aim = true
+        while wait() do
+            local camera = workspace.CurrentCamera
+            camera.CFrame = CFrame.new(camera.CFrame.Position,getclosest().Character.Head.CFrame.Position)
+            if _G.aim == false then return end
+        end
+    end
+end)
+uis.InputEnded:Connect(function(input,chat)
+    if chat then return end
+    if input.UserInputType == Enum.UserInputType.MouseButton2 then
+        _G.aim = false
+    end
+end)
