@@ -77,25 +77,26 @@ UICorner.Parent = open
 
 -- Scripts:
 
-local function WZZW_fake_script() -- toggle.LocalScript 
+local function DMDPC_fake_script() -- toggle.LocalScript 
 	local script = Instance.new('LocalScript', toggle)
 
-	_G.aimbottoggle = false
+	_G.aimbot = false
 	local camera = game.Workspace.CurrentCamera
 	local localplayer = game:GetService("Players").LocalPlayer
+	local mouse = localplayer:GetMouse()
 	local dist = math.huge
 	local target = nil
 	
 	script.Parent.MouseButton1Click:Connect(function()
-		if _G.aimbottoggle == false then
-			_G.aimbottoggle = true
+		if _G.aimbot == false then
+			_G.aimbot = true
 			script.Parent.Text = "on"
 			script.Parent.TextColor3 = Color3.fromRGB(0,255,0)
 			function closestplayer()
 				for i,v in pairs(game:GetService("Players"):GetPlayers()) do
 					if v ~= localplayer then
-						if v.Character and v.Character:FindFirstChild("Head") and v.TeamColor ~= localplayer.TeamColor and _G.aimbottoggle then
-							local mag = (v.Character.Head.Position - localplayer.Character.Head.Position).magnitude
+						if v.Character and v.Character:FindFirstChild("Head") and v.TeamColor ~= localplayer.TeamColor and _G.aimbot == true then
+							local mag = (v.Character.Head.Position - mouse.Hit.Position).magnitude
 							if mag < dist then
 								target = v
 							end
@@ -104,14 +105,14 @@ local function WZZW_fake_script() -- toggle.LocalScript
 				end
 				return target
 			end
-		elseif _G.aimbottoggle == true then
-			_G.aimbottoggle = false
+		elseif _G.aimbot == true then
+			_G.aimbot = false
 			script.Parent.Text = "off"
 			script.Parent.TextColor3 = Color3.fromRGB(255,0,0)
 		end
 	end)
 	
-	local settings = {
+	local settingss = {
 		keybind = Enum.UserInputType.MouseButton2
 	}
 	
@@ -120,25 +121,25 @@ local function WZZW_fake_script() -- toggle.LocalScript
 	
 	uis.InputBegan:Connect(function(inp,chat)
 		if chat then return end
-		if inp.UserInputType == settings.keybind then
+		if inp.UserInputType == settingss.keybind then
 			aiming = true
 		end
 	end)
 	uis.InputEnded:Connect(function(inp,chat)
 		if chat then return end
-		if inp.UserInputType == settings.keybind then
+		if inp.UserInputType == settingss.keybind then
 			aiming = false
 		end
 	end)
 	
 	game:GetService("RunService").RenderStepped:Connect(function()
-		if aiming then
+		if aiming == true then
 			camera.CFrame = CFrame.new(camera.CFrame.Position,closestplayer().Character.Head.CFrame.Position)
 		end	
 	end)
 end
-coroutine.wrap(WZZW_fake_script)()
-local function GKGTTM_fake_script() -- close.LocalScript 
+coroutine.wrap(DMDPC_fake_script)()
+local function YTBW_fake_script() -- close.LocalScript 
 	local script = Instance.new('LocalScript', close)
 
 	script.Parent.MouseButton1Click:Connect(function()
@@ -146,8 +147,8 @@ local function GKGTTM_fake_script() -- close.LocalScript
 		script.Parent.Parent.Parent.open.Visible = true
 	end)
 end
-coroutine.wrap(GKGTTM_fake_script)()
-local function BSAJ_fake_script() -- open.LocalScript 
+coroutine.wrap(YTBW_fake_script)()
+local function VVZTTRV_fake_script() -- open.LocalScript 
 	local script = Instance.new('LocalScript', open)
 
 	script.Parent.MouseButton1Click:Connect(function()
@@ -155,4 +156,4 @@ local function BSAJ_fake_script() -- open.LocalScript
 		script.Parent.Visible = false
 	end)
 end
-coroutine.wrap(BSAJ_fake_script)()
+coroutine.wrap(VVZTTRV_fake_script)()
