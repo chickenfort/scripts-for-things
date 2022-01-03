@@ -77,7 +77,7 @@ UICorner.Parent = open
 
 -- Scripts:
 
-local function DMDPC_fake_script() -- toggle.LocalScript 
+local function LWYLW_fake_script() -- toggle.LocalScript 
 	local script = Instance.new('LocalScript', toggle)
 
 	_G.aimbot = false
@@ -98,6 +98,7 @@ local function DMDPC_fake_script() -- toggle.LocalScript
 						if v.Character and v.Character:FindFirstChild("Head") and v.TeamColor ~= localplayer.TeamColor and _G.aimbot == true then
 							local mag = (v.Character.Head.Position - mouse.Hit.Position).magnitude
 							if mag < dist then
+								dist = mag
 								target = v
 							end
 						end
@@ -138,8 +139,8 @@ local function DMDPC_fake_script() -- toggle.LocalScript
 		end	
 	end)
 end
-coroutine.wrap(DMDPC_fake_script)()
-local function YTBW_fake_script() -- close.LocalScript 
+coroutine.wrap(LWYLW_fake_script)()
+local function CUET_fake_script() -- close.LocalScript 
 	local script = Instance.new('LocalScript', close)
 
 	script.Parent.MouseButton1Click:Connect(function()
@@ -147,8 +148,8 @@ local function YTBW_fake_script() -- close.LocalScript
 		script.Parent.Parent.Parent.open.Visible = true
 	end)
 end
-coroutine.wrap(YTBW_fake_script)()
-local function VVZTTRV_fake_script() -- open.LocalScript 
+coroutine.wrap(CUET_fake_script)()
+local function CPVO_fake_script() -- open.LocalScript 
 	local script = Instance.new('LocalScript', open)
 
 	script.Parent.MouseButton1Click:Connect(function()
@@ -156,4 +157,4 @@ local function VVZTTRV_fake_script() -- open.LocalScript
 		script.Parent.Visible = false
 	end)
 end
-coroutine.wrap(VVZTTRV_fake_script)()
+coroutine.wrap(CPVO_fake_script)()
