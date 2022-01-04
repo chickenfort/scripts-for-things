@@ -1,0 +1,75 @@
+--//setup
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/cat", true))()
+library.theme.accentcolor = Color3.fromRGB(157, 0, 255)
+local window = library:CreateWindow("prson lif",Vector2.new(492,598),Enum.KeyCode.RightShift)
+--//tabs
+local maintab = window:CreateTab("main")
+local misc = window:CreateTab("misc")
+--//sectors
+local gunssector = maintab:CreateSector("guns","left")
+local chrsector = maintab:CreateSector("character","")
+local miscsector = misc:CreateSector("misc","left")
+--//buttons
+local remington = gunssector:AddButton("remington",function()
+    workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["Remington 870"].ITEMPICKUP)
+end)
+local m9 = gunssector:AddButton("m9",function()
+    workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["M9"].ITEMPICKUP)
+end)
+local ak47 = gunssector:AddButton("ak47",function()
+    workspace.Remote.ItemHandler:InvokeServer(workspace.Prison_ITEMS.giver["AK-47"].ITEMPICKUP)
+end)
+local infammo = gunssector:AddButton("infite ammo",function()
+    local tool = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool")
+    if tool and tool:FindFirstChild("GunStates") then
+        local states = require(tool.GunStates)
+        states.MaxAmmo = math.huge
+        states.Ammo = math.huge
+    end
+end)
+local infyield = miscsector:AddButton("infnite yield",function()
+    loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
+end)
+--//toggles
+local autofire = gunssector:AddToggle("automatic",false,function(v)
+    local tool = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool")
+    if tool and tool:FindFirstChild("GunStates") then
+        local states = require(tool.GunStates)
+        states.AutoFire = v
+    end
+end)
+--//sliders
+local firerate = gunssector:AddSlider("firerate",0,1,2,false,function(v)
+    local tool = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool")
+    if tool and tool:FindFirstChild("GunStates") then
+        local states = require(tool.GunStates) 
+        states.FireRate = v
+    end
+end)
+local damage = gunssector:AddSlider("damage",0,1,150,false,function(v)
+    local tool = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool")
+    if tool and tool:FindFirstChild("GunStates") then
+        local states = require(tool.GunStates) 
+        states.Damage = v
+    end
+end)
+local spread = gunssector:AddSlider("spread",1,1,11,false,function(v)
+    local tool = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool")
+    if tool and tool:FindFirstChild("GunStates") then
+        local states = require(tool.GunStates) 
+        states.Spread = v
+    end
+end)
+local bullets = gunssector:AddSlider("bullets",1,1,4,false,function(v)
+    local tool = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool")
+    if tool and tool:FindFirstChild("GunStates") then
+        local states = require(tool.GunStates) 
+        states.Bullets = v
+    end
+end)
+local walkspeed = chrsector:AddSlider("walkspeed",16,16,650,false,function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+local jumppower = chrsector:AddSlider("jump power",50,50,750,false,function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
